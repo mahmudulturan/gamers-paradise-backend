@@ -7,6 +7,9 @@ import cors from 'cors';
 // create app
 const app = express();
 
+//configs
+import './configs/database';
+
 
 // middlewares
 app.use(express.json());
