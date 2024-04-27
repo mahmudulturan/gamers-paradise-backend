@@ -87,3 +87,22 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
         next(error);
     }
 };
+
+
+// controller for logout a user
+export const logoutUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        // cookie options
+        const cookieOptions: ICookieOptions = {
+            httpOnly: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 0
+        };
+        res
+            .clearCookie("token", cookieOptions)
+            .send({ success: true, message: "Logout Successfull" })
+    } catch (error) {
+        next(error);
+    }
+}

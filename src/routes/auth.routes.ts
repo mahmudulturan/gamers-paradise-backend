@@ -1,5 +1,5 @@
 import express from 'express';
-import { loginUser, registerUser } from '../controllers/auth.controllers';
+import { loginUser, logoutUser, registerUser } from '../controllers/auth.controllers';
 
 const router = express.Router();
 
@@ -31,5 +31,17 @@ router
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
     .post('/login', loginUser)
+
+
+
+router
+    /**
+     * @route GET /api/v1/auth/logout
+     * @group Authentication - Operations about user authentication
+     * @produces application/json
+     * @returns {object} 200 - An object containing a success message indicating that the user has been logged out.
+     * @returns {object} 500 - An object containing an error message if there's a server error.
+     */
+    .get('/logout', logoutUser)
 
 export default router;
