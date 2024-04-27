@@ -11,6 +11,10 @@ const app = express();
 import './configs/database';
 
 
+//routes
+import authRoutes from './routes/auth.routes';
+
+
 // middlewares
 app.use(express.json());
 app.use(cors({
@@ -18,6 +22,8 @@ app.use(cors({
     credentials: true
 }));
 
+
+app.use('/api/v1/auth', authRoutes)
 
 
 // home route of this server
