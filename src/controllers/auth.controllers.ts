@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../models/user.model";
 import bcrypt from 'bcrypt';
-import { IUser } from "../types/types";
+import { ICookieOptions, IUser } from "../types/types";
+import jwt from 'jsonwebtoken';
 
 const saltRounds = 10;
 
@@ -36,3 +37,53 @@ export const registerUser = async (req: Request & { body: IUser }, res: Response
     }
 }
 
+
+// controller for login a user
+export const loginUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { email, password } = req.body;
+
+        // find the user by email and if not found then return a message
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            return res.status(404).send({ success: false, error: "User not found!" })
+        }
+
+        // compare the hashing password
+        if (typeof password === 'undefined') {
+            return res.status(400).send({ success: false, error: "Password is required!" });
+        }
+
+        // compare the hashing password
+        bcrypt.compare(password, user.password || "", (err, result) => {
+            // if password matched then successfully logged in otherwise send a message
+            if (result) {
+
+                // genarate a token
+                const tokenSecret = process.env.JWT_TOKEN;
+                if (!tokenSecret) throw new Error("JWT_TOKEN is missing in env file");
+                const userData = { email: user.email, id: user._id };
+                const token = jwt.sign(userData, tokenSecret, { expiresIn: "30d" })
+
+                // cookie options
+                const cookieOptions: ICookieOptions = {
+                    httpOnly: process.env.NODE_ENV === 'production',
+                    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+                    secure: process.env.NODE_ENV === 'production',
+                    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+                };
+
+                const { password, ...userInfo } = user.toObject();
+
+                return res.status(200)
+                    .cookie("token", token, cookieOptions)
+                    .send({ success: true, message: "Login Successful!", user: user });
+            }
+            else {
+                return res.status(401).send({ success: false, message: "Wrong Password!" });
+            }
+        })
+    } catch (error) {
+        next(error);
+    }
+};
