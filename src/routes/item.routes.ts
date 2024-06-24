@@ -18,4 +18,18 @@ router
      */
     .post('/', itemControllers.createItem);
 
+router
+    /**
+     * @route GET /items/:gameId
+     * @group Items - Operations about game items
+     * @description Retrieve all items associated with a specific game by its ID.
+     * 
+     * @param {string} gameId.path.required - The unique identifier of the game whose items are to be retrieved. Example: "60d5ecb77c3bfa40015bdc123"
+     * @produces application/json
+     * @returns {Array.<Item>} 200 - An array of item objects associated with the specified game.
+     * @returns {object} 404 - An object containing an error message if the game is not found.
+     * @returns {object} 500 - An object containing an error message if there's a server error.
+     */
+    .get('/:gameId', itemControllers.getGameItems);
+
 export default router;
