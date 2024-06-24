@@ -1,5 +1,5 @@
 import express from 'express';
-import { createGame, getAllGames } from '../controllers/game.controllers';
+import { createGame, getAGame, getAllGames } from '../controllers/game.controllers';
 
 const router = express.Router();
 
@@ -27,5 +27,17 @@ router
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
     .get('/', getAllGames);
+
+router
+    /**
+     * @route GET /games/:id
+     * @group Games - Operations about games
+     * @param {number} id.path.required - The ID of the game to retrieve. Example: 123
+     * @produces application/json
+     * @returns {object} 200 - An object containing the requested game details.
+     * @returns {object} 404 - An object containing an error message if the game is not found.
+     * @returns {object} 500 - An object containing an error message if there's a server error.
+     */
+    .get('/:id', getAGame);
 
 export default router;

@@ -16,3 +16,11 @@ export const getAllGames = catchAsync(async (req: Request, res: Response) => {
     const games = await Game.find();
     sendResponse(res, 200, true, "Games fetched successfully!", games);
 })
+
+
+// controller for get a game by id
+export const getAGame = catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const game = await Game.findById(id);
+    sendResponse(res, 200, true, "Game fetched successfully!", game);
+})
