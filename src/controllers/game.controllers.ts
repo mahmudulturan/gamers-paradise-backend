@@ -24,3 +24,12 @@ export const getAGame = catchAsync(async (req: Request, res: Response) => {
     const game = await Game.findById(id);
     sendResponse(res, 200, true, "Game fetched successfully!", game);
 })
+
+
+// controller for update a game by id
+export const updateAGame = catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const data = req.body;
+    const game = await Game.findByIdAndUpdate(id, data, { new: true });
+    sendResponse(res, 201, true, "Game updated successfully!", game);
+})

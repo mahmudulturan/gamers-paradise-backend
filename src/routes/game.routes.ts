@@ -1,5 +1,5 @@
 import express from 'express';
-import { createGame, getAGame, getAllGames } from '../controllers/game.controllers';
+import { createGame, getAGame, getAllGames, updateAGame } from '../controllers/game.controllers';
 
 const router = express.Router();
 
@@ -39,5 +39,21 @@ router
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
     .get('/:id', getAGame);
+
+
+router
+    /**
+     * @route PUT /games/:id
+     * @group Games - Operations about games
+     * @param {number} id.path.required - The ID of the game to update. Example: 123
+     * @param {string} name.body.required - The new name of the game. Example: Updated Game Name
+     * @param {string} image.body.required - The new image URL of the game. Example: http://example.com/new-image.jpg
+     * @param {string} description.body.required - A new brief description of the game. Example: An updated action-adventure platformer video game
+     * @produces application/json
+     * @returns {object} 200 - An object containing the updated game details.
+     * @returns {object} 404 - An object containing an error message if the game is not found.
+     * @returns {object} 500 - An object containing an error message if there's a server error.
+     */
+    .put('/:id', updateAGame);
 
 export default router;
