@@ -1,5 +1,5 @@
 import express from 'express';
-import { createGame } from '../controllers/game.controllers';
+import { createGame, getAllGames } from '../controllers/game.controllers';
 
 const router = express.Router();
 
@@ -17,5 +17,15 @@ router
      */
     .post('/', createGame);
 
+
+router
+    /**
+     * @route GET /games
+     * @group Games - Operations about games
+     * @produces application/json
+     * @returns {array.<Game>} 200 - An array of game objects representing all games.
+     * @returns {object} 500 - An object containing an error message if there's a server error.
+     */
+    .get('/', getAllGames);
 
 export default router;

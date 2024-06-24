@@ -9,3 +9,10 @@ export const createGame = catchAsync(async (req: Request, res: Response) => {
     const game = await Game.create({ name, image, description });
     sendResponse(res, 201, true, "Game created successfully!", game);
 })
+
+
+// controller for get all games
+export const getAllGames = catchAsync(async (req: Request, res: Response) => {
+    const games = await Game.find();
+    sendResponse(res, 200, true, "Games fetched successfully!", games);
+})
