@@ -30,7 +30,7 @@ const itemSchema = new mongoose.Schema<IItem>({
     },
     inStock: {
         type: Boolean,
-        required: true
+        default: true
     }
 }, {
     timestamps: true
