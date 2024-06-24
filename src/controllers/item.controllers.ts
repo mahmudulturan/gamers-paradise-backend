@@ -11,7 +11,7 @@ const createItem = catchAsync(async (req: Request, res: Response) => {
 })
 
 
-// controller for create item
+// controller for get Game Items item
 const getGameItems = catchAsync(async (req: Request, res: Response) => {
     const gameId = req.params.gameId;
     const items = await Item.find({ game: gameId });
@@ -19,7 +19,17 @@ const getGameItems = catchAsync(async (req: Request, res: Response) => {
 })
 
 
+// controller for update a item by it's id
+const updateAItem = catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const data = req.body;
+    const items = await Item.findByIdAndUpdate(id, data, { new: true });
+    sendResponse(res, 200, true, "Items updated successfully!", items);
+})
+
+
 export const itemControllers = {
     createItem,
-    getGameItems
+    getGameItems,
+    updateAItem
 }

@@ -18,6 +18,7 @@ router
      */
     .post('/', itemControllers.createItem);
 
+
 router
     /**
      * @route GET /items/:gameId
@@ -31,5 +32,22 @@ router
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
     .get('/:gameId', itemControllers.getGameItems);
+
+
+router
+    /**
+     * @route PUT /items/:id
+     * @group Items - Operations about game items
+     * @description Update an existing item by its ID.
+     * 
+     * @param {string} id.path.required - The unique identifier of the item to be updated. Example: "60d5ecb77c3bfa40015bdc124"
+     * @param {Object} item.body.required - The updated item details. Example: { price: 59.99, quantity: 30 }
+     * @produces application/json
+     * @returns {object} 200 - An object containing the updated item details.
+     * @returns {object} 404 - An object containing an error message if the item is not found.
+     * @returns {object} 500 - An object containing an error message if there's a server error.
+     */
+    .put('/:id', itemControllers.updateAItem);
+
 
 export default router;
