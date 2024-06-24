@@ -32,6 +32,8 @@ const userSchema: Schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Admin"
     }
+}, {
+    timestamps: true
 })
 
 const User = mongoose.model<IUser>("User", userSchema);

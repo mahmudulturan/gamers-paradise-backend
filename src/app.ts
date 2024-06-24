@@ -15,6 +15,7 @@ import './configs/passport';
 
 //routes
 import authRoutes from './routes/auth.routes';
+import userRoutes from './routes/user.routes';
 
 
 // middlewares
@@ -26,7 +27,8 @@ app.use(cors({
 }));
 
 
-app.use('/api/v1/auth', authRoutes)
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/user', userRoutes);
 
 
 // home route of this server

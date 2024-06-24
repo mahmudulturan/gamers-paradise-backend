@@ -6,16 +6,6 @@ import jwt from 'jsonwebtoken';
 
 const saltRounds = 10;
 
-// controller for get the current user
-export const currentUser = (req: Request, res: Response, next: NextFunction) => {
-    try {
-        res.status(200).send({ success: true, user: req.user });
-    } catch (error) {
-        next(error);
-    }
-}
-
-
 // controller for register a user
 export const registerUser = async (req: Request & { body: IUser }, res: Response, next: NextFunction) => {
     try {
