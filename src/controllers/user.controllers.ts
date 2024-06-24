@@ -1,16 +1,12 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
+import catchAsync from "../utils/catchAsync";
 
 
 
 // controller for get the current user
-export const currentUser = (req: Request, res: Response, next: NextFunction) => {
-    try {
-        res.status(200).send({ success: true, user: req.user });
-    } catch (error) {
-        next(error);
-    }
-}
-
+export const currentUser = catchAsync(async (req: Request, res: Response) => {
+    res.status(200).send({ success: true, user: req.user });
+})
 
 
 
