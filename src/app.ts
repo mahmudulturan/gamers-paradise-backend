@@ -1,6 +1,6 @@
 import { config as dotenvConfig } from 'dotenv';
 dotenvConfig();
-import express, { NextFunction, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
@@ -14,10 +14,7 @@ import './configs/passport';
 
 
 //routes
-import authRoutes from './routes/auth.routes';
-import userRoutes from './routes/user.routes';
-import gameRoutes from './routes/game.routes';
-import itemRoutes from './routes/item.routes';
+import routes from './routes/index';
 
 import globalErrorHandler from './errorHandlers/globalErrorHandler';
 import notFoundErrorHandler from './errorHandlers/notFoundErrorHandler';
@@ -32,10 +29,8 @@ app.use(cors({
 }));
 
 
-app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/user', userRoutes);
-app.use('/api/v1/game', gameRoutes);
-app.use('/api/v1/item', itemRoutes);
+// routes
+app.use('/api/v1', routes);
 
 
 // home route of this server
