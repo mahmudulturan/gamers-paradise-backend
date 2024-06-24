@@ -16,6 +16,9 @@ import './configs/passport';
 //routes
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
+import gameRoutes from './routes/game.routes';
+import globalErrorHandler from './errorHandlers/globalErrorHandler';
+import notFoundErrorHandler from './errorHandlers/notFoundErrorHandler';
 
 
 // middlewares
@@ -29,6 +32,7 @@ app.use(cors({
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/game', gameRoutes);
 
 
 // home route of this server
@@ -37,8 +41,10 @@ app.get('/', (req: Request, res: Response) => {
 })
 
 // response for not found route
-app.use((req: Request, res: Response, next: NextFunction) => {
-    res.status(404).send({ message: "The specified route cannot be located or identified." })
-})
+app.use(notFoundErrorHandler);
+
+
+// global error handler
+app.use(globalErrorHandler);
 
 export default app;
