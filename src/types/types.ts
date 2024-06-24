@@ -21,3 +21,11 @@ export interface ICookieOptions {
     maxAge?: number;
     expires?: Date;
 }
+
+//interface for gameSchemna
+export interface IGame {
+    name: string;
+    image: string;
+    route: string;
+    description: string;
+}
