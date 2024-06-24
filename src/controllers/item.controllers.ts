@@ -19,17 +19,25 @@ const getGameItems = catchAsync(async (req: Request, res: Response) => {
 })
 
 
-// controller for update a item by it's id
+// controller for update a item by its id
 const updateAItem = catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     const data = req.body;
-    const items = await Item.findByIdAndUpdate(id, data, { new: true });
-    sendResponse(res, 200, true, "Items updated successfully!", items);
+    const item = await Item.findByIdAndUpdate(id, data, { new: true });
+    sendResponse(res, 201, true, "Items updated successfully!", item);
+})
+
+// controller for delete a item by its id
+const deleteAItem = catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const item = await Item.findByIdAndDelete(id);
+    sendResponse(res, 201, true, "Items deleted successfully!", item);
 })
 
 
 export const itemControllers = {
     createItem,
     getGameItems,
-    updateAItem
+    updateAItem,
+    deleteAItem
 }

@@ -50,4 +50,18 @@ router
     .put('/:id', itemControllers.updateAItem);
 
 
+router
+    /**
+     * @route DELETE /items/:id
+     * @group Items - Operations about game items
+     * @description Delete an existing item by its ID.
+     * 
+     * @param {string} id.path.required - The unique identifier of the item to be deleted. Example: "60d5ecb77c3bfa40015bdc124"
+     * @produces application/json
+     * @returns {object} 200 - An object containing a success message indicating that the item has been deleted.
+     * @returns {object} 404 - An object containing an error message if the item is not found.
+     * @returns {object} 500 - An object containing an error message if there's a server error.
+     */
+    .delete('/:id', itemControllers.deleteAItem);
+
 export default router;

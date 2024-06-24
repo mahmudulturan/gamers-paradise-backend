@@ -16,11 +16,11 @@ const allRoutes = [
         route: userRoutes
     },
     {
-        path: '/game',
+        path: '/games',
         route: gameRoutes
     },
     {
-        path: '/item',
+        path: '/items',
         route: itemRoutes
     },
 ]
