@@ -1,4 +1,4 @@
-import { Types, ObjectId } from "mongoose";
+import { ObjectId } from "mongoose";
 
 //interface for userSchema
 export interface IUser extends Document {
@@ -28,4 +28,15 @@ export interface IGame {
     image: string;
     route: string;
     description: string;
+}
+
+//interface for itemSchema
+export interface IItem {
+    game: ObjectId;
+    price: number;
+    item_type: string;
+    item_count: number;
+    bookings: ObjectId[];
+    quantity: number;
+    inStock: boolean;
 }
