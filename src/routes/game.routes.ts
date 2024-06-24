@@ -1,5 +1,5 @@
 import express from 'express';
-import { createGame, getAGame, getAllGames, updateAGame } from '../controllers/game.controllers';
+import { createGame, deleteAGame, getAGame, getAllGames, updateAGame } from '../controllers/game.controllers';
 
 const router = express.Router();
 
@@ -55,5 +55,18 @@ router
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
     .put('/:id', updateAGame);
+
+
+router
+    /**
+     * @route DELETE /games/:id
+     * @group Games - Operations about games
+     * @param {number} id.path.required - The ID of the game to delete. Example: 123
+     * @produces application/json
+     * @returns {object} 200 - An object containing a success message indicating that the game has been deleted.
+     * @returns {object} 404 - An object containing an error message if the game is not found.
+     * @returns {object} 500 - An object containing an error message if there's a server error.
+     */
+    .delete('/:id', deleteAGame);
 
 export default router;

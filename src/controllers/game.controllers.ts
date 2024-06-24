@@ -33,3 +33,10 @@ export const updateAGame = catchAsync(async (req: Request, res: Response) => {
     const game = await Game.findByIdAndUpdate(id, data, { new: true });
     sendResponse(res, 201, true, "Game updated successfully!", game);
 })
+
+// controller for delete a game by id
+export const deleteAGame = catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const game = await Game.findByIdAndDelete(id);
+    sendResponse(res, 201, true, "Game deleted successfully!", game);
+})
