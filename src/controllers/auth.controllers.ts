@@ -5,6 +5,7 @@ import { ICookieOptions, IUser } from "../types/types";
 import jwt from 'jsonwebtoken';
 import catchAsync from "../utils/catchAsync";
 import sendResponse from "../utils/sendResponse";
+import AppError from "../errors/AppError";
 
 const saltRounds = 10;
 
@@ -15,7 +16,8 @@ export const registerUser = catchAsync(async (req: Request & { body: IUser }, re
     // find the user if exist return a message
     const isUserExist = await User.findOne({ email: email });
     if (isUserExist) {
-        return res.status(409).send({ success: false, error: "This email already exist!" })
+        throw new AppError(409, "This email already exist!");
+        // return res.status(409).send({ success: false, error: "This email already exist!" })
     }
 
     // hashing the password before saving database 
