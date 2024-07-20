@@ -2,6 +2,7 @@ import authRoutes from './auth.routes';
 import userRoutes from './user.routes';
 import gameRoutes from './game.routes';
 import itemRoutes from './item.routes';
+import adminRoutes from './admin.routes';
 import { Router } from 'express';
 
 const router = Router();
@@ -14,6 +15,10 @@ const allRoutes = [
     {
         path: '/user',
         route: userRoutes
+    },
+    {
+        path: '/admin',
+        route: adminRoutes
     },
     {
         path: '/games',
