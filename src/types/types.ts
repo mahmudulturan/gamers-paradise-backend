@@ -41,3 +41,7 @@ export interface IItem {
     quantity: number;
     inStock: boolean;
 }
+
+export interface IAdmin {
+    user: Types.ObjectId;
+}
