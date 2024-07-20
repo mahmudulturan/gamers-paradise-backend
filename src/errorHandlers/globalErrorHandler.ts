@@ -1,4 +1,5 @@
 import { ErrorRequestHandler } from "express";
+import handleCastError from "../errors/handleCastError";
 import handleDuplicateError from "../errors/handleDuplicateError";
 import handleValidationError from "../errors/handleValidationError";
 import dot_env from "../configs/dotenv";
@@ -36,7 +37,12 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
         status = simplifiedDuplicateError?.statusCode;
         message = simplifiedDuplicateError?.message;
         errorMessages = simplifiedDuplicateError?.errorSources;
-    } 
+    } else if (err.name === "CastError") {                      // handle cast error
+        const simplifiedCastError = handleCastError(err);
+        status = simplifiedCastError?.statusCode;
+        message = simplifiedCastError?.message;
+        errorMessages = simplifiedCastError?.errorSources;
+    }
 
     res.status(status).send({
         success: false,
