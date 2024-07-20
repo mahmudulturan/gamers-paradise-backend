@@ -10,7 +10,7 @@ const saltRounds = 10;
 
 // controller for register a user
 export const registerUser = catchAsync(async (req: Request & { body: IUser }, res: Response, next: NextFunction) => {
-    const { name, email, password: passwordFromBody, ...rest } = req.body;
+    const { name, email, password: passwordFromBody, role, admin, superAdmin, ...rest } = req.body;
 
     // find the user if exist return a message
     const isUserExist = await User.findOne({ email: email });
