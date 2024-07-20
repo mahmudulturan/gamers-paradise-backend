@@ -13,7 +13,7 @@ router
         * @returns {object} 409 - An object containing an error message if the user already exists.
         * @returns {object} 500 - An object containing an error message if there's a server error.
         */
-    .get('/current-user', verifyUser, currentUser);
+    .get('/current-user', verifyUser("user", "admin"), currentUser);
 
 
 export default router;
