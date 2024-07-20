@@ -1,5 +1,5 @@
 
-import { TGenericErrorResponse, TErrorSources } from "../errorHandlers/globalErrorHandler";
+import { TGenericErrorResponse, TErrorSources } from "../middlewares/globalErrorHandler";
 
 const handleDuplicateError = (err: any): TGenericErrorResponse => {
 

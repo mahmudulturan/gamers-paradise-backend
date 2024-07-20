@@ -16,8 +16,8 @@ import './configs/passport';
 //routes
 import routes from './routes/index';
 
-import globalErrorHandler from './errorHandlers/globalErrorHandler';
-import notFoundErrorHandler from './errorHandlers/notFoundErrorHandler';
+import globalErrorHandler from './middlewares/globalErrorHandler';
+import notFoundErrorHandler from './middlewares/notFoundErrorHandler';
 import dot_env from './configs/dotenv';
 
 
