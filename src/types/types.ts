@@ -44,4 +44,5 @@ export interface IItem {
 
 export interface IAdmin {
     user: Types.ObjectId;
+    status: "active" | "deleted";
 }

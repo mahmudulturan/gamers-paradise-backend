@@ -18,5 +18,27 @@ export const createAdmin = catchAsync(async (req: Request, res: Response) => {
     user.admin = newAdmin._id;
     user.role = "admin";
     await user.save();
-    sendResponse(res, 201, "Admin created successfully!", user);
+    sendResponse(res, 201, "User is promoted to an Admin role!", user);
+})
+
+
+export const deleteAdmin = catchAsync(async (req: Request, res: Response) => {
+    const adminId = req.params.id;
+    const admin = await Admin.findByIdAndDelete(adminId);
+
+    if (!admin) {
+        throw new AppError(404, "Admin not found!");
+    }
+    const user = await User.findById(admin.user);
+
+    if (!user) {
+        throw new AppError(404, "User not found!");
+    }
+
+    user.role = "user";
+    // user.admin = null;
+    await user.save();
+
+    sendResponse(res, 201, "User is demoted to an User role!", user);
+
 })
