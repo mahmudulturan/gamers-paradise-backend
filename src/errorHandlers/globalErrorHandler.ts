@@ -1,4 +1,5 @@
 import { ErrorRequestHandler } from "express";
+import handleDuplicateError from "../errors/handleDuplicateError";
 import handleValidationError from "../errors/handleValidationError";
 import dot_env from "../configs/dotenv";
 
@@ -30,6 +31,11 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
         errorMessages = simplifiedMongooseError.errorSources;
         status = simplifiedMongooseError.statusCode;
         message = simplifiedMongooseError.message;
+    } else if (err.code === 11000) {                             // handle duplicate error with code 1000
+        const simplifiedDuplicateError = handleDuplicateError(err);
+        status = simplifiedDuplicateError?.statusCode;
+        message = simplifiedDuplicateError?.message;
+        errorMessages = simplifiedDuplicateError?.errorSources;
     } 
 
     res.status(status).send({
