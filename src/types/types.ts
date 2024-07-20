@@ -28,6 +28,7 @@ export interface IGame {
     image: string;
     route: string;
     description: string;
+    categories: string[];
     items: Types.ObjectId[];
 }
 

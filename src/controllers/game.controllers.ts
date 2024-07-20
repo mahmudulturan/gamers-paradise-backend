@@ -5,8 +5,8 @@ import sendResponse from "../utils/sendResponse";
 
 // controller for create a new game
 export const createGame = catchAsync(async (req: Request, res: Response) => {
-    const { name, image, description } = req.body;
-    const game = await Game.create({ name, image, description });
+    const { name, image, description, categories } = req.body;
+    const game = await Game.create({ name, image, description, categories });
     sendResponse(res, 201, "Game created successfully!", game);
 })
 
