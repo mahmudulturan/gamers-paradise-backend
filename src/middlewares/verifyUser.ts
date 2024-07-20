@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import passport from "passport";
-import { IUser } from "../types/types";
-import AppError from "../errors/AppError";
 import Admin from "../models/admin.model";
+import { IUser } from "../interfaces/user.interface";
 
 export type TRole = "user" | "admin" | "super-admin";
 

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import { IItem } from "../types/types";
+import { IItem } from "../interfaces/item.interface";
+
 
 const itemSchema = new mongoose.Schema<IItem>({
     game: {
@@ -11,7 +12,7 @@ const itemSchema = new mongoose.Schema<IItem>({
         type: Number,
         required: true
     },
-    item_type: {
+    item_category: {
         type: String,
         required: true
     },
@@ -24,13 +25,9 @@ const itemSchema = new mongoose.Schema<IItem>({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Booking"
         }],
-    quantity: {
+    inventory: {
         type: Number,
         requred: true
-    },
-    inStock: {
-        type: Boolean,
-        default: true
     }
 }, {
     timestamps: true

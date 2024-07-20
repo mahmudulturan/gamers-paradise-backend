@@ -1,5 +1,5 @@
 import mongoose, { model } from "mongoose";
-import { IGame } from "../types/types";
+import { IGame } from "../interfaces/game.interface";
 
 const gameSchema = new mongoose.Schema<IGame>({
     name: { type: String, required: true },
