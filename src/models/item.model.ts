@@ -1,5 +1,44 @@
 import mongoose from "mongoose";
-import { IItem } from "../interfaces/item.interface";
+import { ICategory, IInventory, IItem, IPrice } from "../interfaces/item.interface";
+
+const priceSchema = new mongoose.Schema<IPrice>({
+    orginalPrice: {
+        type: Number,
+        required: true
+    },
+    discountedPrice: {
+        type: Number,
+        required: true
+    }
+}, {
+    _id: false
+})
+
+const categorySchema = new mongoose.Schema<ICategory>({
+    name: {
+        type: String,
+        required: true
+    },
+    currency: {
+        type: String,
+        required: true
+    }
+})
+
+
+const inventorySchema = new mongoose.Schema<IInventory>({
+    quantity: {
+        type: Number,
+        required: true
+    },
+    inStock: {
+        type: Boolean,
+        required: true,
+        default: true
+    }
+}, {
+    _id: false
+})
 
 
 const itemSchema = new mongoose.Schema<IItem>({
@@ -9,15 +48,15 @@ const itemSchema = new mongoose.Schema<IItem>({
         required: true
     },
     price: {
-        type: Number,
+        type: priceSchema,
         required: true
     },
     item_category: {
-        type: String,
+        type: categorySchema,
         required: true
     },
     item_count: {
-        type: Number,
+        type: String,
         required: true
     },
     bookings: [
@@ -26,7 +65,7 @@ const itemSchema = new mongoose.Schema<IItem>({
             ref: "Booking"
         }],
     inventory: {
-        type: Number,
+        type: inventorySchema,
         requred: true
     }
 }, {
