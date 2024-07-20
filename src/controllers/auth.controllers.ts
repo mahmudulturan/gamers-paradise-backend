@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import { ICookieOptions, IUser } from "../types/types";
 import jwt from 'jsonwebtoken';
 import catchAsync from "../utils/catchAsync";
+import sendResponse from "../utils/sendResponse";
 
 const saltRounds = 10;
 
@@ -27,7 +28,8 @@ export const registerUser = catchAsync(async (req: Request & { body: IUser }, re
                 ...rest
             })
             await newUser.save();
-            res.status(201).send({ success: true, message: "User registered successfully!" });
+            sendResponse(res, 201, "User registered successfully!", newUser);
+            // res.status(201).send({ success: true, message: "User registered successfully!" });
         } catch (error) {
             next(error);
         }

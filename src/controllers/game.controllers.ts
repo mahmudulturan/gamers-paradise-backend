@@ -7,22 +7,22 @@ import sendResponse from "../utils/sendResponse";
 export const createGame = catchAsync(async (req: Request, res: Response) => {
     const { name, image, description } = req.body;
     const game = await Game.create({ name, image, description });
-    sendResponse(res, 201, true, "Game created successfully!", game);
+    sendResponse(res, 201, "Game created successfully!", game);
 })
 
 
 // controller for get all games
 export const getAllGames = catchAsync(async (req: Request, res: Response) => {
     const games = await Game.find();
-    sendResponse(res, 200, true, "Games fetched successfully!", games);
+    sendResponse(res, 200, "Games fetched successfully!", games);
 })
 
 
 // controller for get a game by id
 export const getAGame = catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
-    const game = await Game.findById(id);
-    sendResponse(res, 200, true, "Game fetched successfully!", game);
+    const game = await Game.findById(id).populate("items");
+    sendResponse(res, 200, "Game fetched successfully!", game);
 })
 
 
@@ -31,12 +31,12 @@ export const updateAGame = catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     const data = req.body;
     const game = await Game.findByIdAndUpdate(id, data, { new: true });
-    sendResponse(res, 201, true, "Game updated successfully!", game);
+    sendResponse(res, 201, "Game updated successfully!", game);
 })
 
 // controller for delete a game by id
 export const deleteAGame = catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     const game = await Game.findByIdAndDelete(id);
-    sendResponse(res, 201, true, "Game deleted successfully!", game);
+    sendResponse(res, 201, "Game deleted successfully!", game);
 })

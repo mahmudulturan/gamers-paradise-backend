@@ -15,7 +15,7 @@ const createItem = catchAsync(async (req: Request, res: Response) => {
     const newItem = await Item.create(itemData);
     game.items.push(newItem._id);
     await game.save();
-    sendResponse(res, 201, true, "Item created successfully!", newItem);
+    sendResponse(res, 201, "Item created successfully!", newItem);
 })
 
 
@@ -23,7 +23,7 @@ const createItem = catchAsync(async (req: Request, res: Response) => {
 const getGameItems = catchAsync(async (req: Request, res: Response) => {
     const gameId = req.params.gameId;
     const items = await Item.find({ game: gameId });
-    sendResponse(res, 200, true, "Items fetched successfully!", items);
+    sendResponse(res, 200, "Items fetched successfully!", items);
 })
 
 
@@ -32,14 +32,14 @@ const updateAItem = catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     const data = req.body;
     const item = await Item.findByIdAndUpdate(id, data, { new: true });
-    sendResponse(res, 201, true, "Items updated successfully!", item);
+    sendResponse(res, 201, "Items updated successfully!", item);
 })
 
 // controller for delete a item by its id
 const deleteAItem = catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     const item = await Item.findByIdAndDelete(id);
-    sendResponse(res, 201, true, "Items deleted successfully!", item);
+    sendResponse(res, 201, "Items deleted successfully!", item);
 })
 
 
