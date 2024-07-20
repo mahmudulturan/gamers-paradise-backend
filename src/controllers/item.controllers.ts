@@ -2,11 +2,19 @@ import { Request, Response } from "express";
 import catchAsync from "../utils/catchAsync";
 import Item from "../models/item.model";
 import sendResponse from "../utils/sendResponse";
+import Game from "../models/game.model";
+import AppError from "../errors/AppError";
 
 // controller for create item
 const createItem = catchAsync(async (req: Request, res: Response) => {
     const itemData = req.body;
+    const game = await Game.findById(itemData.game);
+    if (!game) {
+        throw new AppError(404, "Game Not Found");
+    }
     const newItem = await Item.create(itemData);
+    game.items.push(newItem._id);
+    await game.save();
     sendResponse(res, 201, true, "Item created successfully!", newItem);
 })
 
@@ -19,7 +27,7 @@ const getGameItems = catchAsync(async (req: Request, res: Response) => {
 })
 
 
-// controller for update a item by its id
+// controller for update a item by its id  
 const updateAItem = catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     const data = req.body;
