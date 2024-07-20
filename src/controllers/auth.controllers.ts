@@ -19,17 +19,18 @@ export const registerUser = catchAsync(async (req: Request & { body: IUser }, re
     }
 
     // hashing the password before saving database 
-    bcrypt.hash(passwordFromBody, saltRounds, async (err, password) => {
+    bcrypt.hash(passwordFromBody, saltRounds, async (err, hashedPassword) => {
         try {
             const newUser = new User({
                 name,
                 email,
-                password,
+                password: hashedPassword,
                 ...rest
             })
             await newUser.save();
-            sendResponse(res, 201, "User registered successfully!", newUser);
-            // res.status(201).send({ success: true, message: "User registered successfully!" });
+
+            const { password, ...userInfo } = newUser.toObject();
+            sendResponse(res, 201, "User registered successfully!", userInfo);
         } catch (error) {
             next(error);
         }
@@ -43,7 +44,7 @@ export const loginUser = catchAsync(async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     // find the user by email and if not found then return a message
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ email: email }).select("+password");
     if (!user) {
         return res.status(404).send({ success: false, error: "User not found!" })
     }
@@ -76,13 +77,12 @@ export const loginUser = catchAsync(async (req: Request, res: Response) => {
 
             return res.status(200)
                 .cookie("token", token, cookieOptions)
-                .send({ success: true, message: "Login Successful!", user: user });
+                .send({ success: true, message: "Login Successful!", user: userInfo });
         }
         else {
             return res.status(401).send({ success: false, message: "Wrong Password!" });
         }
     })
-
 })
 
 
