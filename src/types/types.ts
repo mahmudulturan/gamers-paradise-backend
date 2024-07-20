@@ -1,4 +1,4 @@
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 
 //interface for userSchema
 export interface IUser extends Document {
@@ -8,9 +8,9 @@ export interface IUser extends Document {
     password?: string;
     googleId?: string;
     role: string;
-    admin?: ObjectId;
-    superAdmin?: ObjectId;
-    bookings?: ObjectId[];
+    admin?: Types.ObjectId;
+    superAdmin?: Types.ObjectId;
+    bookings?: Types.ObjectId[];
 }
 
 //interface for cookie options
@@ -28,15 +28,16 @@ export interface IGame {
     image: string;
     route: string;
     description: string;
+    items: Types.ObjectId[];
 }
 
 //interface for itemSchema
 export interface IItem {
-    game: ObjectId;
+    game: Types.ObjectId;
     price: number;
     item_type: string;
     item_count: number;
-    bookings: ObjectId[];
+    bookings: Types.ObjectId[];
     quantity: number;
     inStock: boolean;
 }
