@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { IUser } from "../types/types";
 
-const userSchema: Schema = new mongoose.Schema({
+const userSchema: Schema = new mongoose.Schema<IUser>({
     name: {
         type: String,
         required: [true, "Name is missing, It must be required!"],
@@ -31,6 +31,10 @@ const userSchema: Schema = new mongoose.Schema({
     admin: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Admin"
+    },
+    bookings: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "Bookings"
     }
 }, {
     timestamps: true
