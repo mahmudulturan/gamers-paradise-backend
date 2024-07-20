@@ -52,7 +52,15 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
                 message: err?.message,
             },
         ];
-    } 
+    } else if (err instanceof Error) {  // handle default error
+        message = err?.message;
+        errorMessages = [
+            {
+                path: '',
+                message: err?.message,
+            },
+        ];
+    }
 
     res.status(status).send({
         success: false,
