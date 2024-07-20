@@ -35,7 +35,7 @@ app.use('/api/v1', routes);
 
 // home route of this server
 app.get('/', (req: Request, res: Response) => {
-    res.send("Wellcome to Barber Voyage server")
+    res.send("Wellcome to Gamers Paradise server")
 })
 
 // response for not found route

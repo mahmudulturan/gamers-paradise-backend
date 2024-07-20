@@ -8,5 +8,5 @@ const port = process.env.PORT || 7000;
 
 // run the server
 app.listen(port, () => {
-    console.log(`Barber Voyage server is running on port: ${port}`);
+    console.log(`Gamers Paradise server is running on port: ${port}`);
 })
