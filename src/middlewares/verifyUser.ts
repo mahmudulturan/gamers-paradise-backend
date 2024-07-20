@@ -4,7 +4,7 @@ import { IUser } from "../types/types";
 import AppError from "../errors/AppError";
 import Admin from "../models/admin.model";
 
-export type TRole = "user" | "admin";
+export type TRole = "user" | "admin" | "super-admin";
 
 export const verifyUser = (...requiredRole: TRole[]) => {
     return (req: Request, res: Response, next: NextFunction) => {
@@ -24,11 +24,11 @@ export const verifyUser = (...requiredRole: TRole[]) => {
             const isMatchedRole = requiredRole.includes(user.role as TRole);
 
             if (!isMatchedRole) {
-                throw new AppError(404, "Unauthorized Access");
+                return res.status(401).send({ message: "Unauthorized Access" });
             }
 
             // if user's role are admin then check with admin id the admin are exists or not
-            if (user.role == "admin") {
+            if (user.role == "admin" || user.role == "super-admin") {
                 const isExistAdmin = await Admin.findById(user.admin);
                 if (!isExistAdmin) {
                     return res.status(401).send({ message: "Unauthorized Access" });

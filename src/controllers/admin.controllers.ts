@@ -11,7 +11,7 @@ export const createAdmin = catchAsync(async (req: Request, res: Response) => {
     if (!user) {
         throw new AppError(404, "User Not Found!");
     }
-    if (user.role == "admin") {
+    if (user.role == "admin" || user.role == "super-admin") {
         throw new AppError(409, "User already is an admin!");
     }
     const newAdmin = await Admin.create(data);
