@@ -1,5 +1,6 @@
 import express from 'express';
 import { createGame, deleteAGame, getAGame, getAllGames, updateAGame } from '../controllers/game.controllers';
+import verifyUser from '../middlewares/verifyUser';
 
 const router = express.Router();
 
@@ -15,7 +16,7 @@ router
      * @returns {object} 400 - An object containing an error message if the request body is invalid.
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
-    .post('/', createGame);
+    .post('/', verifyUser("admin", "super-admin"), createGame);
 
 
 router
@@ -54,7 +55,7 @@ router
      * @returns {object} 404 - An object containing an error message if the game is not found.
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
-    .put('/:id', updateAGame);
+    .put('/:id', verifyUser("admin", "super-admin"), updateAGame);
 
 
 router
@@ -67,6 +68,6 @@ router
      * @returns {object} 404 - An object containing an error message if the game is not found.
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
-    .delete('/:id', deleteAGame);
+    .delete('/:id', verifyUser("admin", "super-admin"), deleteAGame);
 
 export default router;
