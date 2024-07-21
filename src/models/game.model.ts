@@ -21,6 +21,18 @@ const gameSchema = new mongoose.Schema<IGame>({
     timestamps: true
 })
 
-const Game = model("Game", gameSchema);
 
+
+gameSchema.pre("find", function (next) {
+    this.find({ isDeleted: { $ne: true } });
+    next();
+})
+
+gameSchema.pre("findOne", function (next) {
+    this.find({ isDeleted: { $ne: true } });
+    next();
+})
+
+
+const Game = model("Game", gameSchema);
 export default Game;
