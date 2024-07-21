@@ -78,6 +78,12 @@ const itemSchema = new mongoose.Schema<IItem>({
     timestamps: true
 });
 
+itemSchema.pre("findOne", function (next) {
+    this.findOne({ isDeleted: { $ne: true } })
+    next();
+})
+
+
 
 const Item = mongoose.model<IItem>("Item", itemSchema);
 
