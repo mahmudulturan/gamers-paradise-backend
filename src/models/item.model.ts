@@ -69,6 +69,10 @@ const itemSchema = new mongoose.Schema<IItem>({
     inventory: {
         type: inventorySchema,
         requred: true
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true

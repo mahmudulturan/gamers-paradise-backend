@@ -45,8 +45,22 @@ const updateAItem = catchAsync(async (req: Request, res: Response) => {
 // controller for delete a item by its id
 const deleteAItem = catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
-    const item = await Item.findByIdAndDelete(id);
-    sendResponse(res, 201, "Items deleted successfully!", item);
+    const item = await Item.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
+    if (!item) {
+        throw new AppError(404, "Item not found!")
+    }
+    const game = await Game.findById(item?.game);
+    if (!game) {
+        throw new AppError(404, "Game not found!")
+    }
+    const category = game?.categories.find(category => category.name == item?.item_category.name);
+    if (!category) {
+        throw new AppError(404, "Category not found!")
+    }
+    const filteredCategoryItems = category?.items.filter(filterItem => id != filterItem.toString());
+    category.items = filteredCategoryItems;
+    await game?.save();
+    sendResponse(res, 201, "Items deleted successfully!", null);
 })
 
 

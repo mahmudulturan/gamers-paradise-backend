@@ -27,4 +27,5 @@ export interface IItem {
     item_count: string;
     bookings: Types.ObjectId[];
     inventory: IInventory;
+    isDeleted: boolean;
 }
