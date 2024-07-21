@@ -1,12 +1,21 @@
 import mongoose, { model } from "mongoose";
-import { IGame } from "../interfaces/game.interface";
+import { ICategory, IGame } from "../interfaces/game.interface";
+
+const categorySchema = new mongoose.Schema<ICategory>({
+    name: {
+        type: String,
+        required: true
+    },
+    items: {
+        type: [mongoose.Schema.ObjectId], ref: "Item"
+    }
+}, { _id: false })
 
 const gameSchema = new mongoose.Schema<IGame>({
     name: { type: String, required: true },
     image: { type: String, required: true },
-    categories: { type: [String], required: true },
-    description: { type: String, required: true },
-    items: { type: [mongoose.Schema.ObjectId], ref: "Item" }
+    categories: { type: [categorySchema], required: true },
+    description: { type: String, required: true }
 }, {
     timestamps: true
 })

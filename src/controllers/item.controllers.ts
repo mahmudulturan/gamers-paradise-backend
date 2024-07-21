@@ -14,14 +14,13 @@ const createItem = catchAsync(async (req: Request, res: Response) => {
     }
 
     // if category not exist then throw an error
-    const isCategoryExist = game.categories.find(category => itemData.item_category.name == category);
+    const isCategoryExist = game.categories.find(category => itemData.item_category.name == category.name);
     if (!isCategoryExist) {
         throw new AppError(404, "Category Not Found");
     }
 
-
     const newItem = await Item.create(itemData);
-    game.items.push(newItem._id);
+    isCategoryExist?.items.push(newItem._id);
     await game.save();
     sendResponse(res, 201, "Item created successfully!", newItem);
 })

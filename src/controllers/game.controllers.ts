@@ -5,8 +5,8 @@ import sendResponse from "../utils/sendResponse";
 
 // controller for create a new game
 export const createGame = catchAsync(async (req: Request, res: Response) => {
-    const { name, image, description, categories } = req.body;
-    const game = await Game.create({ name, image, description, categories });
+    const { name, image, description, categories, items } = req.body;
+    const game = await Game.create({ name, image, description, categories, items });
     sendResponse(res, 201, "Game created successfully!", game);
 })
 
@@ -21,7 +21,7 @@ export const getAllGames = catchAsync(async (req: Request, res: Response) => {
 // controller for get a game by id
 export const getAGame = catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
-    const game = await Game.findById(id).populate("items");
+    const game = await Game.findById(id).populate("categories.items");
     sendResponse(res, 200, "Game fetched successfully!", game);
 })
 
