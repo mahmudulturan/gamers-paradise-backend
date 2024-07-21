@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { itemControllers } from "../controllers/item.controllers";
+import verifyUser from "../middlewares/verifyUser";
 
 const router = Router();
 
@@ -16,7 +17,7 @@ router
      * @returns {object} 400 - An object containing an error message if the request body is invalid.
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
-    .post('/', itemControllers.createItem);
+    .post('/', verifyUser("admin", "super-admin"), itemControllers.createItem);
 
 
 router
@@ -31,7 +32,7 @@ router
      * @returns {object} 404 - An object containing an error message if the game is not found.
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
-    .get('/:gameId', itemControllers.getGameItems);
+    .get('/:gameId', verifyUser("admin", "super-admin"), itemControllers.getGameItems);
 
 
 router
@@ -47,7 +48,7 @@ router
      * @returns {object} 404 - An object containing an error message if the item is not found.
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
-    .put('/:id', itemControllers.updateAItem);
+    .put('/:id', verifyUser("admin", "super-admin"), itemControllers.updateAItem);
 
 
 router
@@ -62,6 +63,6 @@ router
      * @returns {object} 404 - An object containing an error message if the item is not found.
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
-    .delete('/:id', itemControllers.deleteAItem);
+    .delete('/:id', verifyUser("admin", "super-admin"), itemControllers.deleteAItem);
 
 export default router;
