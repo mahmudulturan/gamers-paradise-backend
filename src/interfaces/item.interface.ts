@@ -16,7 +16,7 @@ export interface IInventory {
 // interface for price
 export interface IPrice {
     orginalPrice: number;
-    discountedPrice: number;
+    discountPercentage: number;
 }
 
 //interface for itemSchema

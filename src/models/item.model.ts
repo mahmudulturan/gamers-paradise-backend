@@ -6,7 +6,7 @@ const priceSchema = new mongoose.Schema<IPrice>({
         type: Number,
         required: true
     },
-    discountedPrice: {
+    discountPercentage: {
         type: Number,
         required: true
     }
@@ -23,6 +23,8 @@ const categorySchema = new mongoose.Schema<ICategory>({
         type: String,
         required: true
     }
+}, {
+    _id: false
 })
 
 
