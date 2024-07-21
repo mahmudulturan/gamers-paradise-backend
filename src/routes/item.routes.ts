@@ -22,17 +22,17 @@ router
 
 router
     /**
-     * @route GET /items/:gameId
-     * @group Items - Operations about game items
-     * @description Retrieve all items associated with a specific game by its ID.
+     * @route GET /items/:id
+     * @group Items - Operations about get item
+     * @description Retrieve a item associated with a specific  ID.
      * 
-     * @param {string} gameId.path.required - The unique identifier of the game whose items are to be retrieved. Example: "60d5ecb77c3bfa40015bdc123"
+     * @param {string} id.path.required - The unique identifier of the game whose items are to be retrieved. Example: "60d5ecb77c3bfa40015bdc123"
      * @produces application/json
-     * @returns {Array.<Item>} 200 - An array of item objects associated with the specified game.
+     * @returns {Item} 200 - An array of item objects associated with the specified game.
      * @returns {object} 404 - An object containing an error message if the game is not found.
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
-    .get('/:gameId', verifyUser("admin", "super-admin"), itemControllers.getGameItems);
+    .get('/:id', verifyUser("admin", "super-admin"), itemControllers.getAItem);
 
 
 router
