@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import catchAsync from "../utils/catchAsync";
 import Game from "../models/game.model";
 import sendResponse from "../utils/sendResponse";
+import Item from "../models/item.model";
 
 // controller for create a new game
 export const createGame = catchAsync(async (req: Request, res: Response) => {
@@ -37,6 +38,13 @@ export const updateAGame = catchAsync(async (req: Request, res: Response) => {
 // controller for delete a game by id
 export const deleteAGame = catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
-    const game = await Game.findByIdAndDelete(id);
+    const game = await Game.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
+    const filter = { game: game?._id }
+    const updatedData = {
+        $set: {
+            isDeleted: true
+        }
+    }
+    await Item.updateMany(filter, updatedData)
     sendResponse(res, 201, "Game deleted successfully!", game);
 })

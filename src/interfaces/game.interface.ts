@@ -12,4 +12,5 @@ export interface IGame {
     route: string;
     description: string;
     categories: ICategory[];
+    isDeleted: boolean;
 }
