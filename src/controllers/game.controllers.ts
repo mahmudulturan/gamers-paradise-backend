@@ -46,5 +46,5 @@ export const deleteAGame = catchAsync(async (req: Request, res: Response) => {
         }
     }
     await Item.updateMany(filter, updatedData)
-    sendResponse(res, 201, "Game deleted successfully!", game);
+    sendResponse(res, 201, "Game deleted successfully!", null);
 })
