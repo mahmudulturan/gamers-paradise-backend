@@ -1,4 +1,4 @@
-import mongoose, { model, mongo } from "mongoose";
+import mongoose, { model } from "mongoose";
 import { IBooking } from "../interfaces/booking.interface";
 
 const bookingSchema = new mongoose.Schema<IBooking>({
