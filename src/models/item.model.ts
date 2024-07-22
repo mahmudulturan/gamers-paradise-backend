@@ -78,11 +78,14 @@ const itemSchema = new mongoose.Schema<IItem>({
     timestamps: true
 });
 
+// itemSchema.virtual("discountedPrice").get(function () {
+//     return (this.price.orginalPrice - this.price.discountPercentage);
+// })
+
 itemSchema.pre("findOne", function (next) {
     this.findOne({ isDeleted: { $ne: true } })
     next();
 })
-
 
 
 const Item = mongoose.model<IItem>("Item", itemSchema);

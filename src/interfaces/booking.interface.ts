@@ -5,6 +5,6 @@ export interface IBooking {
     items: Types.ObjectId[];
     price: number;
     status: "confirmed" | "delivered" | "canceled";
-    idInfo: string;
+    gameIdInfo: string;
     paymentInfo: Types.ObjectId;
 }
