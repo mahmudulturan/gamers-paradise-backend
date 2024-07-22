@@ -1,8 +1,8 @@
-import express from 'express';
 import verifyUser from '../middlewares/verifyUser';
 import { gameControllers } from '../controllers/game.controllers';
+import { Router } from 'express';
 
-const router = express.Router();
+const router = Router();
 
 router
     /**

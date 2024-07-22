@@ -1,7 +1,7 @@
-import express from 'express';
+import { Router } from 'express';
 import { authControllers } from '../controllers/auth.controllers';
 
-const router = express.Router();
+const router = Router();
 
 
 router

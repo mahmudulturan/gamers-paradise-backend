@@ -1,8 +1,8 @@
-import express from 'express';
 import verifyUser from '../middlewares/verifyUser';
 import { userControllers } from '../controllers/user.controllers';
+import { Router } from 'express';
 
-const router = express.Router();
+const router = Router();
 
 router
     /**
