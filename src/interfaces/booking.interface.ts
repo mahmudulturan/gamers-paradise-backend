@@ -7,4 +7,5 @@ export interface IBooking {
     status: "confirmed" | "delivered" | "canceled";
     gameIdInfo: string;
     paymentInfo: Types.ObjectId;
+    isDeleted: boolean;
 }

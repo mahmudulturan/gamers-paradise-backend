@@ -28,6 +28,10 @@ const bookingSchema = new mongoose.Schema<IBooking>({
     paymentInfo: {
         type: mongoose.Schema.Types.ObjectId,
         default: "669badb6647fb3981090be17"
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false
     }
 })
 

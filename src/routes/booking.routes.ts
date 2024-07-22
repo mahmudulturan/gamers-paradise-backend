@@ -8,4 +8,6 @@ router.post("/", verifyUser("user"), bookingControllers.createBooking);
 
 router.patch("/:id", verifyUser("admin", "super-admin"), bookingControllers.updateBookingStatus);
 
+router.delete("/:id", verifyUser("admin", "super-admin"), bookingControllers.deleteBooking);
+
 export default router;

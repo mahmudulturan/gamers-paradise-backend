@@ -42,8 +42,19 @@ const updateBookingStatus = catchAsync(async (req: Request, res: Response) => {
     sendResponse(res, 201, "Booking successfull!", booking);
 })
 
+const deleteBooking = catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const booking = await Booking.findById(id);
+    if (!booking) {
+        throw new AppError(404, "Booking not found!");
+    }
+    booking.isDeleted = true;
+    await booking.save();
+    sendResponse(res, 201, "Booking deleted", null);
+})
 
 export const bookingControllers = {
     createBooking,
     updateBookingStatus,
+    deleteBooking
 }
