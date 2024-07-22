@@ -58,9 +58,20 @@ const getAllBooking = catchAsync(async (req: Request, res: Response) => {
     sendResponse(res, 200, "Bookings retrived successfully!", bookings);
 })
 
+const getBookingsByUserId = catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.userId;
+    const isUserExist = await User.findById(id);
+    if (!isUserExist) {
+        throw new AppError(404, "User not found!");
+    }
+    const bookings = await Booking.find({ user: id });
+    sendResponse(res, 200, "Bookings retrived successfully!", bookings);
+})
+
 export const bookingControllers = {
     createBooking,
     updateBookingStatus,
     deleteBooking,
-    getAllBooking
+    getAllBooking,
+    getBookingsByUserId
 }

@@ -12,4 +12,6 @@ router.delete("/:id", verifyUser("admin", "super-admin"), bookingControllers.del
 
 router.get("/", verifyUser("admin", "super-admin"), bookingControllers.getAllBooking);
 
+router.get("/:userId", verifyUser("user"), bookingControllers.getBookingsByUserId);
+
 export default router;
