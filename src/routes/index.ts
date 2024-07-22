@@ -1,8 +1,9 @@
 import authRoutes from './auth.routes';
 import userRoutes from './user.routes';
+import adminRoutes from './admin.routes';
 import gameRoutes from './game.routes';
 import itemRoutes from './item.routes';
-import adminRoutes from './admin.routes';
+import bookingRoutes from './booking.routes';
 import { Router } from 'express';
 
 const router = Router();
@@ -27,6 +28,10 @@ const allRoutes = [
     {
         path: '/items',
         route: itemRoutes
+    },
+    {
+        path: '/bookings',
+        route: bookingRoutes
     },
 ]
 
