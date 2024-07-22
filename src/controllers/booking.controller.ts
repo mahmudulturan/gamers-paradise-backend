@@ -39,7 +39,7 @@ const updateBookingStatus = catchAsync(async (req: Request, res: Response) => {
     }
 
     await booking.save();
-    sendResponse(res, 200, "Booking successfull!", booking);
+    sendResponse(res, 200, `Booking ${status}!`, booking);
 })
 
 const deleteBooking = catchAsync(async (req: Request, res: Response) => {
