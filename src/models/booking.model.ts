@@ -35,6 +35,15 @@ const bookingSchema = new mongoose.Schema<IBooking>({
     }
 })
 
+bookingSchema.pre("find", function (next) {
+    this.find({ isDeleted: { $ne: true } });
+    next();
+})
+
+bookingSchema.pre("findOne", function (next) {
+    this.find({ isDeleted: { $ne: true } });
+    next();
+})
 
 const Booking = model<IBooking>("Booking", bookingSchema);
 
