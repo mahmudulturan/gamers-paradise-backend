@@ -10,4 +10,6 @@ router.patch("/:id", verifyUser("admin", "super-admin"), bookingControllers.upda
 
 router.delete("/:id", verifyUser("admin", "super-admin"), bookingControllers.deleteBooking);
 
+router.get("/", verifyUser("admin", "super-admin"), bookingControllers.getAllBooking);
+
 export default router;

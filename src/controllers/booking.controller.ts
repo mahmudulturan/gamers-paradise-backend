@@ -39,7 +39,7 @@ const updateBookingStatus = catchAsync(async (req: Request, res: Response) => {
     }
 
     await booking.save();
-    sendResponse(res, 201, "Booking successfull!", booking);
+    sendResponse(res, 200, "Booking successfull!", booking);
 })
 
 const deleteBooking = catchAsync(async (req: Request, res: Response) => {
@@ -50,11 +50,17 @@ const deleteBooking = catchAsync(async (req: Request, res: Response) => {
     }
     booking.isDeleted = true;
     await booking.save();
-    sendResponse(res, 201, "Booking deleted", null);
+    sendResponse(res, 200, "Booking deleted!", null);
+})
+
+const getAllBooking = catchAsync(async (req: Request, res: Response) => {
+    const bookings = await Booking.find();
+    sendResponse(res, 200, "Bookings retrived successfully!", bookings);
 })
 
 export const bookingControllers = {
     createBooking,
     updateBookingStatus,
-    deleteBooking
+    deleteBooking,
+    getAllBooking
 }
