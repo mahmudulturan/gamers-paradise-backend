@@ -5,7 +5,7 @@ import AppError from "../errors/AppError";
 import Admin from "../models/admin.model";
 import sendResponse from "../utils/sendResponse";
 
-export const createAdmin = catchAsync(async (req: Request, res: Response) => {
+const createAdmin = catchAsync(async (req: Request, res: Response) => {
     const data = req.body;
     const user = await User.findById(data.user);
     if (!user) {
@@ -22,7 +22,7 @@ export const createAdmin = catchAsync(async (req: Request, res: Response) => {
 })
 
 
-export const deleteAdmin = catchAsync(async (req: Request, res: Response) => {
+const deleteAdmin = catchAsync(async (req: Request, res: Response) => {
     const adminId = req.params.id;
     const admin = await Admin.findByIdAndDelete(adminId);
 
@@ -42,3 +42,9 @@ export const deleteAdmin = catchAsync(async (req: Request, res: Response) => {
     sendResponse(res, 201, "User is demoted to an User role!", user);
 
 })
+
+
+export const adminControllers = {
+    createAdmin,
+    deleteAdmin
+}

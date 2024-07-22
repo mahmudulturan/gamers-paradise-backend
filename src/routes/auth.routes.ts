@@ -1,5 +1,5 @@
 import express from 'express';
-import { loginUser, logoutUser, registerUser } from '../controllers/auth.controllers';
+import { authControllers } from '../controllers/auth.controllers';
 
 const router = express.Router();
 
@@ -16,7 +16,7 @@ router
      * @returns {object} 409 - An object containing an error message if the user already exists.
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
-    .post('/register', registerUser);
+    .post('/register', authControllers.registerUser);
 
 
 router
@@ -31,7 +31,7 @@ router
      * @returns {object} 404 - An object containing an error message if the user is not found.
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
-    .post('/login', loginUser)
+    .post('/login', authControllers.loginUser)
 
 router
     /**
@@ -41,6 +41,6 @@ router
      * @returns {object} 200 - An object containing a success message indicating that the user has been logged out.
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
-    .get('/logout', logoutUser)
+    .get('/logout', authControllers.logoutUser)
 
 export default router;

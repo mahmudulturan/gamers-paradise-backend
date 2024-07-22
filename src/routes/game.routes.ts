@@ -1,6 +1,6 @@
 import express from 'express';
-import { createGame, deleteAGame, getAGame, getAllGames, updateAGame } from '../controllers/game.controllers';
 import verifyUser from '../middlewares/verifyUser';
+import { gameControllers } from '../controllers/game.controllers';
 
 const router = express.Router();
 
@@ -16,7 +16,7 @@ router
      * @returns {object} 400 - An object containing an error message if the request body is invalid.
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
-    .post('/', verifyUser("admin", "super-admin"), createGame);
+    .post('/', verifyUser("admin", "super-admin"), gameControllers.createGame);
 
 
 router
@@ -27,7 +27,7 @@ router
      * @returns {array.<Game>} 200 - An array of game objects representing all games.
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
-    .get('/', getAllGames);
+    .get('/', gameControllers.getAllGames);
 
 router
     /**
@@ -39,7 +39,7 @@ router
      * @returns {object} 404 - An object containing an error message if the game is not found.
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
-    .get('/:id', getAGame);
+    .get('/:id', gameControllers.getAGame);
 
 
 router
@@ -55,7 +55,7 @@ router
      * @returns {object} 404 - An object containing an error message if the game is not found.
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
-    .put('/:id', verifyUser("admin", "super-admin"), updateAGame);
+    .put('/:id', verifyUser("admin", "super-admin"), gameControllers.updateAGame);
 
 
 router
@@ -68,6 +68,6 @@ router
      * @returns {object} 404 - An object containing an error message if the game is not found.
      * @returns {object} 500 - An object containing an error message if there's a server error.
      */
-    .delete('/:id', verifyUser("admin", "super-admin"), deleteAGame);
+    .delete('/:id', verifyUser("admin", "super-admin"), gameControllers.deleteAGame);
 
 export default router;

@@ -1,6 +1,6 @@
 import express from 'express';
 import verifyUser from '../middlewares/verifyUser';
-import { currentUser } from '../controllers/user.controllers';
+import { userControllers } from '../controllers/user.controllers';
 
 const router = express.Router();
 
@@ -13,7 +13,7 @@ router
         * @returns {object} 409 - An object containing an error message if the user already exists.
         * @returns {object} 500 - An object containing an error message if there's a server error.
         */
-    .get('/current-user', verifyUser("user", "admin", "super-admin"), currentUser);
+    .get('/current-user', verifyUser("user", "admin", "super-admin"), userControllers.currentUser);
 
 
 export default router;

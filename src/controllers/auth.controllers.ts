@@ -11,7 +11,7 @@ import { IUser } from "../interfaces/user.interface";
 const saltRounds = 10;
 
 // controller for register a user
-export const registerUser = catchAsync(async (req: Request & { body: IUser }, res: Response, next: NextFunction) => {
+const registerUser = catchAsync(async (req: Request & { body: IUser }, res: Response, next: NextFunction) => {
     const { name, email, password: passwordFromBody, role, admin, superAdmin, ...rest } = req.body;
 
     // find the user if exist return a message
@@ -43,7 +43,7 @@ export const registerUser = catchAsync(async (req: Request & { body: IUser }, re
 
 
 // controller for login a user
-export const loginUser = catchAsync(async (req: Request, res: Response) => {
+const loginUser = catchAsync(async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     // find the user by email and if not found then return a message
@@ -90,7 +90,7 @@ export const loginUser = catchAsync(async (req: Request, res: Response) => {
 
 
 // controller for logout a user
-export const logoutUser = catchAsync(async (req: Request, res: Response) => {
+const logoutUser = catchAsync(async (req: Request, res: Response) => {
     // cookie options
     const cookieOptions: ICookieOptions = {
         httpOnly: process.env.NODE_ENV === 'production',
@@ -103,3 +103,10 @@ export const logoutUser = catchAsync(async (req: Request, res: Response) => {
         .send({ success: true, message: "Logout Successfull" })
 
 })
+
+
+export const authControllers = {
+    registerUser,
+    loginUser,
+    logoutUser
+}
