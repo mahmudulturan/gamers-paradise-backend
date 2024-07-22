@@ -26,6 +26,24 @@ const createBooking = catchAsync(async (req: Request, res: Response) => {
     sendResponse(res, 201, "Booking successfull!", newBooking);
 })
 
+const updateBookingStatus = catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const { status } = req.body;
+    const booking = await Booking.findById(id);
+    if (!booking) {
+        throw new AppError(404, "Booking not found!");
+    }
+
+    if (status) {
+        booking.status = status;
+    }
+
+    await booking.save();
+    sendResponse(res, 201, "Booking successfull!", booking);
+})
+
+
 export const bookingControllers = {
-    createBooking
+    createBooking,
+    updateBookingStatus,
 }
