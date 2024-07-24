@@ -1,33 +1,39 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../models/user.model";
 import bcrypt from 'bcrypt';
-import { ICookieOptions, IUser } from "../types/types";
 import jwt from 'jsonwebtoken';
 import catchAsync from "../utils/catchAsync";
+import sendResponse from "../utils/sendResponse";
+import AppError from "../errors/AppError";
+import { ICookieOptions } from "../interfaces/cookie.interface";
+import { IUser } from "../interfaces/user.interface";
 
 const saltRounds = 10;
 
 // controller for register a user
-export const registerUser = catchAsync(async (req: Request & { body: IUser }, res: Response, next: NextFunction) => {
-    const { name, email, password: passwordFromBody, ...rest } = req.body;
+const registerUser = catchAsync(async (req: Request & { body: IUser }, res: Response, next: NextFunction) => {
+    const { name, email, password: passwordFromBody, role, admin, superAdmin, ...rest } = req.body;
 
     // find the user if exist return a message
     const isUserExist = await User.findOne({ email: email });
     if (isUserExist) {
-        return res.status(409).send({ success: false, error: "This email already exist!" })
+        throw new AppError(409, "This email already exist!");
+        // return res.status(409).send({ success: false, error: "This email already exist!" })
     }
 
     // hashing the password before saving database 
-    bcrypt.hash(passwordFromBody, saltRounds, async (err, password) => {
+    bcrypt.hash(passwordFromBody, saltRounds, async (err, hashedPassword) => {
         try {
             const newUser = new User({
                 name,
                 email,
-                password,
+                password: hashedPassword,
                 ...rest
             })
             await newUser.save();
-            res.status(201).send({ success: true, message: "User registered successfully!" });
+
+            const { password, ...userInfo } = newUser.toObject();
+            sendResponse(res, 201, "User registered successfully!", userInfo);
         } catch (error) {
             next(error);
         }
@@ -37,11 +43,11 @@ export const registerUser = catchAsync(async (req: Request & { body: IUser }, re
 
 
 // controller for login a user
-export const loginUser = catchAsync(async (req: Request, res: Response) => {
+const loginUser = catchAsync(async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     // find the user by email and if not found then return a message
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ email: email }).select("+password");
     if (!user) {
         return res.status(404).send({ success: false, error: "User not found!" })
     }
@@ -74,18 +80,17 @@ export const loginUser = catchAsync(async (req: Request, res: Response) => {
 
             return res.status(200)
                 .cookie("token", token, cookieOptions)
-                .send({ success: true, message: "Login Successful!", user: user });
+                .send({ success: true, message: "Login Successful!", user: userInfo });
         }
         else {
             return res.status(401).send({ success: false, message: "Wrong Password!" });
         }
     })
-
 })
 
 
 // controller for logout a user
-export const logoutUser = catchAsync(async (req: Request, res: Response) => {
+const logoutUser = catchAsync(async (req: Request, res: Response) => {
     // cookie options
     const cookieOptions: ICookieOptions = {
         httpOnly: process.env.NODE_ENV === 'production',
@@ -98,3 +103,10 @@ export const logoutUser = catchAsync(async (req: Request, res: Response) => {
         .send({ success: true, message: "Logout Successfull" })
 
 })
+
+
+export const authControllers = {
+    registerUser,
+    loginUser,
+    logoutUser
+}

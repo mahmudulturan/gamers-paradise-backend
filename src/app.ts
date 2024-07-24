@@ -16,15 +16,16 @@ import './configs/passport';
 //routes
 import routes from './routes/index';
 
-import globalErrorHandler from './errorHandlers/globalErrorHandler';
-import notFoundErrorHandler from './errorHandlers/notFoundErrorHandler';
+import globalErrorHandler from './middlewares/globalErrorHandler';
+import notFoundErrorHandler from './middlewares/notFoundErrorHandler';
+import dot_env from './configs/dotenv';
 
 
 // middlewares
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: ["http://localhost:3000" || "", process.env.LIVE_CLIENT_URL || ""],
+    origin: [dot_env.local_client_url as string, dot_env.live_client_url as string],
     credentials: true
 }));
 
@@ -35,7 +36,7 @@ app.use('/api/v1', routes);
 
 // home route of this server
 app.get('/', (req: Request, res: Response) => {
-    res.send("Wellcome to Barber Voyage server")
+    res.send("Wellcome to Gamers Paradise server")
 })
 
 // response for not found route

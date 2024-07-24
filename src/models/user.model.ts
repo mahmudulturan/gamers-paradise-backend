@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
-import { IUser } from "../types/types";
+import { IUser } from "../interfaces/user.interface";
 
-const userSchema: Schema = new mongoose.Schema({
+const userSchema: Schema = new mongoose.Schema<IUser>({
     name: {
         type: String,
         required: [true, "Name is missing, It must be required!"],
@@ -17,6 +17,7 @@ const userSchema: Schema = new mongoose.Schema({
     password: {
         type: String,
         required: false,
+        select: false
     },
     googleId: {
         type: String,
@@ -31,6 +32,10 @@ const userSchema: Schema = new mongoose.Schema({
     admin: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Admin"
+    },
+    bookings: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "Bookings"
     }
 }, {
     timestamps: true

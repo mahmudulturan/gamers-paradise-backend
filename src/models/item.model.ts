@@ -1,5 +1,47 @@
 import mongoose from "mongoose";
-import { IItem } from "../types/types";
+import { ICategory, IInventory, IItem, IPrice } from "../interfaces/item.interface";
+
+const priceSchema = new mongoose.Schema<IPrice>({
+    orginalPrice: {
+        type: Number,
+        required: true
+    },
+    discountPercentage: {
+        type: Number,
+        required: true
+    }
+}, {
+    _id: false
+})
+
+const categorySchema = new mongoose.Schema<ICategory>({
+    name: {
+        type: String,
+        required: true
+    },
+    currency: {
+        type: String,
+        required: true
+    }
+}, {
+    _id: false
+})
+
+
+const inventorySchema = new mongoose.Schema<IInventory>({
+    quantity: {
+        type: Number,
+        required: true
+    },
+    inStock: {
+        type: Boolean,
+        required: true,
+        default: true
+    }
+}, {
+    _id: false
+})
+
 
 const itemSchema = new mongoose.Schema<IItem>({
     game: {
@@ -8,15 +50,15 @@ const itemSchema = new mongoose.Schema<IItem>({
         required: true
     },
     price: {
-        type: Number,
+        type: priceSchema,
         required: true
     },
-    item_type: {
-        type: String,
+    item_category: {
+        type: categorySchema,
         required: true
     },
     item_count: {
-        type: Number,
+        type: String,
         required: true
     },
     bookings: [
@@ -24,17 +66,26 @@ const itemSchema = new mongoose.Schema<IItem>({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Booking"
         }],
-    quantity: {
-        type: Number,
+    inventory: {
+        type: inventorySchema,
         requred: true
     },
-    inStock: {
+    isDeleted: {
         type: Boolean,
-        default: true
+        default: false
     }
 }, {
     timestamps: true
 });
+
+// itemSchema.virtual("discountedPrice").get(function () {
+//     return (this.price.orginalPrice - this.price.discountPercentage);
+// })
+
+itemSchema.pre("findOne", function (next) {
+    this.findOne({ isDeleted: { $ne: true } })
+    next();
+})
 
 
 const Item = mongoose.model<IItem>("Item", itemSchema);
